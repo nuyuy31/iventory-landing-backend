@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 19, 2025 at 11:16 PM
+-- Generation Time: Feb 23, 2025 at 03:45 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -31,22 +31,17 @@ CREATE TABLE `barang` (
   `id_barang` varchar(20) NOT NULL,
   `nama_barang` varchar(60) DEFAULT NULL,
   `stok` varchar(4) DEFAULT NULL,
-  `id_satuan` int(20) DEFAULT NULL,
-  `id_jenis` int(20) DEFAULT NULL,
-  `foto` varchar(225) DEFAULT NULL
+  `id_jenis` int(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `barang`
 --
 
-INSERT INTO `barang` (`id_barang`, `nama_barang`, `stok`, `id_satuan`, `id_jenis`, `foto`) VALUES
-('BRG-0003', NULL, NULL, NULL, NULL, 'box.png'),
-('BRG-0004', 'hanasuak', '14', NULL, 3, NULL),
-('BRG-0005', 'baju', '1', NULL, 3, 'box.png'),
-('BRG-0006', 'tv', '3', NULL, 3, NULL),
-('BRG-0007', 'baju', '12', NULL, 4, 'box.png'),
-('BRG-0008', 'Kursi', '12', NULL, 5, 'box.png');
+INSERT INTO `barang` (`id_barang`, `nama_barang`, `stok`, `id_jenis`) VALUES
+('BRG-0010', 'laptop', '12', 6),
+('BRG-0011', 'kursi', '2', 5),
+('BRG-0013', 'celana', '6', 7);
 
 -- --------------------------------------------------------
 
@@ -91,7 +86,8 @@ CREATE TABLE `barang_masuk` (
 
 INSERT INTO `barang_masuk` (`id_barang_masuk`, `id_supplier`, `id_barang`, `id_user`, `jumlah_masuk`, `tgl_masuk`) VALUES
 ('BRG-M-0001', 'SPLY-0003', 'BRG-0002', 'USR-001', 30, '2020-09-15'),
-('BRG-M-0002', 'SPLY-0001', 'BRG-0006', 'USR-001', 12, '2025-02-19');
+('BRG-M-0002', 'SPLY-0001', 'BRG-0006', 'USR-001', 12, '2025-02-19'),
+('BRG-M-0003', 'SPLY-0004', 'BRG-0013', 'USR-001', 3, '2025-02-23');
 
 -- --------------------------------------------------------
 
@@ -112,28 +108,8 @@ CREATE TABLE `jenis` (
 INSERT INTO `jenis` (`id_jenis`, `nama_jenis`, `ket`) VALUES
 (4, 'pakaian', ''),
 (5, 'funitur', ''),
-(6, 'makanan', '');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `satuan`
---
-
-CREATE TABLE `satuan` (
-  `id_satuan` int(20) NOT NULL,
-  `nama_satuan` varchar(60) DEFAULT NULL,
-  `ket` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `satuan`
---
-
-INSERT INTO `satuan` (`id_satuan`, `nama_satuan`, `ket`) VALUES
-(1, 'Box', ''),
-(2, 'Unit', ''),
-(4, 'Pack', '');
+(6, 'makanan', ''),
+(7, 'makeup', '');
 
 -- --------------------------------------------------------
 
@@ -155,7 +131,8 @@ CREATE TABLE `supplier` (
 INSERT INTO `supplier` (`id_supplier`, `nama_supplier`, `notelp`, `alamat`) VALUES
 ('SPLY-0001', 'Ririn', '6458738', 'Japuura'),
 ('SPLY-0002', 'firna', '674387', 'gmt'),
-('SPLY-0003', 'guntur', '4729', 'japura lor');
+('SPLY-0003', 'guntur', '4729', 'japura lor'),
+('SPLY-0004', 'ayu', '653249', 'ajdkajj');
 
 -- --------------------------------------------------------
 
@@ -171,7 +148,6 @@ CREATE TABLE `user` (
   `notelp` varchar(15) NOT NULL,
   `level` enum('gudang','admin') NOT NULL,
   `password` varchar(255) NOT NULL,
-  `foto` varchar(50) NOT NULL,
   `status` enum('Aktif','Tidak Aktif') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -179,11 +155,11 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id_user`, `nama`, `username`, `email`, `notelp`, `level`, `password`, `foto`, `status`) VALUES
-('USR-001', 'Admin', 'admin', 'admin@admin.com', '087856123445', 'admin', '0192023a7bbd73250516f069df18b500', '', 'Aktif'),
-('USR-002', 'Gudang', 'gudang', 'gudang@gmail.com', '087817379229', 'gudang', '202446dd1d6028084426867365b0c7a1', 'user.png', 'Aktif'),
-('USR-003', 'ririn', 'ririn', 'ririn@gmail.com', '546378', 'admin', '44357f65c44037b6ae6405cfb00fb24b', 'user.png', 'Aktif'),
-('USR-004', 'guntur', 'guntur', 'guntur123@gmail.com', '762491', 'gudang', 'ef803eebfaaaee381a84a353e05cae91', 'user.png', 'Aktif');
+INSERT INTO `user` (`id_user`, `nama`, `username`, `email`, `notelp`, `level`, `password`, `status`) VALUES
+('USR-001', 'Admin', 'admin', 'admin@admin.com', '087856123445', 'admin', '0192023a7bbd73250516f069df18b500', 'Aktif'),
+('USR-002', 'Gudang', 'gudang', 'gudang@gmail.com', '087817379229', 'gudang', '202446dd1d6028084426867365b0c7a1', 'Aktif'),
+('USR-003', 'ririn', 'ririn', 'ririn@gmail.com', '546378', 'admin', '44357f65c44037b6ae6405cfb00fb24b', 'Aktif'),
+('USR-004', 'guntur', 'guntur', 'guntur123@gmail.com', '762491', 'gudang', 'ef803eebfaaaee381a84a353e05cae91', 'Aktif');
 
 --
 -- Indexes for dumped tables
@@ -214,12 +190,6 @@ ALTER TABLE `jenis`
   ADD PRIMARY KEY (`id_jenis`);
 
 --
--- Indexes for table `satuan`
---
-ALTER TABLE `satuan`
-  ADD PRIMARY KEY (`id_satuan`);
-
---
 -- Indexes for table `supplier`
 --
 ALTER TABLE `supplier`
@@ -239,13 +209,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `jenis`
 --
 ALTER TABLE `jenis`
-  MODIFY `id_jenis` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT for table `satuan`
---
-ALTER TABLE `satuan`
-  MODIFY `id_satuan` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_jenis` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
